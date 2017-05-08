@@ -1,5 +1,6 @@
 import requests
 import sys
+import socket
 def url_maker_following(Name,page_number):
     return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=following"
 def url_maker_follower(Name,page_number):
@@ -54,6 +55,29 @@ def following_list_gen(follower_name):
         temp_list = user_list_gen(following_html,follower_name)
         following_list.extend(temp_list)
     return following_list
+
+def internet(host="8.8.8.8", port=53, timeout=3):
+    """
+    Check Internet Connections.
+    :param  host: the host that check connection to
+    :param  port: port that check connection with
+    :param  timeout: times that check the connnection
+    :type host:str
+    :type port:int
+    :type timeout:int
+    :return bool: True if Connection is Stable
+    >>> internet() # if there is stable internet connection
+    True
+    >>> internet() # if there is no stable internet connection
+    False
+    """
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except Exception as ex:
+        error_log(str(ex))
+        return False
 
 if __name__=="__main__":
     follower_name="sepandhaghighi"
