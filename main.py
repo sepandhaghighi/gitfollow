@@ -192,19 +192,19 @@ def print_line(number=30,char="-"):
     print(line)
 if __name__=="__main__":
     time_1=time.perf_counter()
-    follower_name="sepandhaghighi"
+    username=input("Please Enter Your Github Username : ")
     print("Collecting Follower Information ...")
-    list_1=follower_list_gen(follower_name)
-    file = open(follower_name + "_follower.log", "w")
+    list_1=follower_list_gen(username)
+    file = open(username + "_follower.log", "w")
     file.write("\n".join(list_1))
     file.close()
     print('Collecting Following Informnation ...')
-    list_2=following_list_gen(follower_name)
-    file = open(follower_name + "_following.log", "w")
+    list_2=following_list_gen(username)
+    file = open(username + "_following.log", "w")
     file.write("\n".join(list_2))
     file.close()
     following_not_follower=[]
-    file=open(follower_name+"_dif.log","w")
+    file=open(username+"_dif.log","w")
     for i in list_2:
         if i not in list_1:
             following_not_follower.append(i)
