@@ -11,6 +11,7 @@ Github following and follower control
 
 ## Usage ##
 - Enter your username & wait
+- Find your data in log files
 
 
 ## Issues & Bug Reports			
