@@ -1,6 +1,9 @@
 import requests
 import sys
 import socket
+import os
+import datetime
+from functools import reduce
 def url_maker_following(Name,page_number):
     return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=following"
 def url_maker_follower(Name,page_number):
@@ -20,10 +23,15 @@ def user_list_gen(input_string,follower_name):
 
 
 def get_html(url):
-    new_session=requests.session()
-    new_session.cookies.clear()
-    raw_html=new_session.get(url)
-    return raw_html.text
+    if internet()==True:
+        new_session=requests.session()
+        new_session.cookies.clear()
+        raw_html=new_session.get(url)
+        new_session.close()
+        return raw_html.text
+    else:
+        print("Error In Internet")
+        sys.exit()
 
 
 def end_check(input_string):
@@ -56,6 +64,18 @@ def following_list_gen(follower_name):
         following_list.extend(temp_list)
     return following_list
 
+def error_log(msg):
+    """
+    Create the errorlog of the app
+    :param msg: error message
+    :type msg:str
+    """
+    if "log" not in os.listdir():
+        os.mkdir("log")
+    file = open(reduce(os.path.join, [os.getcwd(), "log", "error_log.txt"]), "a")
+    file.write(str(datetime.datetime.now()) + " --> " + str(msg) + "\n")
+    file.close()
+
 def internet(host="8.8.8.8", port=53, timeout=3):
     """
     Check Internet Connections.
@@ -81,8 +101,24 @@ def internet(host="8.8.8.8", port=53, timeout=3):
 
 if __name__=="__main__":
     follower_name="sepandhaghighi"
+    file=open(follower_name+"_follower.log","w")
+    print("Collecting Follower Information ...")
     list_1=follower_list_gen(follower_name)
-    print(list_1)
+    file.write("\n".join(list_1))
+    file.close()
+    file=open(follower_name+"_following.log","w")
+    print('Collecting Following Informnation ...')
+    list_2=following_list_gen(follower_name)
+    file.write("\n".join(list_2))
+    file.close()
+    following_not_follower=[]
+    file=open(follower_name+".log","w")
+    for i in list_2:
+        if i not in list_1:
+            following_not_follower.append(i)
+            file.write(i+"\n")
+    file.close()
+
 
 
 
