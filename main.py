@@ -28,7 +28,11 @@ def get_html(url):
         new_session.cookies.clear()
         raw_html=new_session.get(url)
         new_session.close()
-        return raw_html.text
+        raw_data=raw_html.text
+        if "Not Found" in raw_data:
+            print("Invalid Github User")
+            sys.exit()
+        return raw_data
     else:
         print("Error In Internet")
         sys.exit()
@@ -112,7 +116,7 @@ if __name__=="__main__":
     file.write("\n".join(list_2))
     file.close()
     following_not_follower=[]
-    file=open(follower_name+".log","w")
+    file=open(follower_name+"_dif.log","w")
     for i in list_2:
         if i not in list_1:
             following_not_follower.append(i)
