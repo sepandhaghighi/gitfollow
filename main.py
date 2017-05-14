@@ -9,11 +9,35 @@ from random import randint
 DEBUG=False
 import gc
 def url_maker_following(Name,page_number):
+    '''
+    This function return github following page url
+    :param Name: Username
+    :param page_number: page nubmer of following page
+    :type Name:str
+    :type Page:int
+    :return: github following url as string
+    '''
     return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=following"
 def url_maker_follower(Name,page_number):
+    '''
+    This function return github follower page url
+    :param Name: username
+    :param page_number: page number of follower page
+    :type Name:str
+    :type page_number:int
+    :return: github follower url as string
+    '''
     return "https://github.com/" + Name + "?page=" + str(page_number) + "&tab=followers"
 
 def user_list_gen(input_string,follower_name):
+    '''
+    This function extract usernames from raw_html
+    :param input_string: raw input html
+    :param follower_name: follower_name
+    :type input_string:str
+    :type follower_name:str
+    :return: user_list as list
+    '''
     user_list=[]
     index=0
     while(index!=-1):
@@ -27,6 +51,12 @@ def user_list_gen(input_string,follower_name):
 
 
 def get_html(url):
+    '''
+    This function extract raw_html file
+    :param url: url
+    :type url:str
+    :return: html data
+    '''
     time.sleep(create_random_sleep())
     if internet()==True:
         new_session=requests.session()
@@ -44,11 +74,23 @@ def get_html(url):
 
 
 def end_check(input_string):
+    '''
+    This function check end page
+    :param input_string: raw html
+    :type input_string:str
+    :return: True or False
+    '''
     if input_string.find("reached the end")!=-1:
         return True
     else:
         return False
 def follower_list_gen(follower_name):
+    '''
+    This function generate follower_list
+    :param follower_name: username
+    :type follower_name:str
+    :return: username follower list
+    '''
     follower_list = []
     page_number=0
     while (True):
@@ -61,6 +103,12 @@ def follower_list_gen(follower_name):
         follower_list.extend(temp_list)
     return follower_list
 def following_list_gen(follower_name):
+    '''
+    This function generate following list
+    :param follower_name: username
+    :type follower_name:str
+    :return: username following list
+    '''
     following_list = []
     page_number=0
     while (True):
@@ -143,6 +191,7 @@ def print_line(number=30,char="-"):
         line=line+char
     print(line)
 if __name__=="__main__":
+    time_1=time.perf_counter()
     follower_name="sepandhaghighi"
     print("Collecting Follower Information ...")
     list_1=follower_list_gen(follower_name)
@@ -161,6 +210,8 @@ if __name__=="__main__":
             following_not_follower.append(i)
             file.write(i+"\n")
     file.close()
+    time_2=time.perf_counter()
+    print("Data Generated In "+str(time_2-time_1)+" sec")
     gc.collect()
 
 
