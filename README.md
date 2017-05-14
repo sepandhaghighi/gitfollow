@@ -1,6 +1,19 @@
-# Gitfollow
 
-Github following and follower control
+
+<div align="center">
+<img src="http://www.shaghighi.ir/gitfollow/gitfollow.png" height=240 width=400>
+<hr/></hr>
+<h1>Gitfollow</h1>
+
+
+<a href=""><img src="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/badges/quality-score.png?b=master"></a>
+<a href=""><img src="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/badges/build.png?b=master"></a>
+
+
+</div>
+
+
+
 
 
 ## Installation
