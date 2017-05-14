@@ -4,6 +4,10 @@ import socket
 import os
 import datetime
 from functools import reduce
+import time
+from random import randint
+DEBUG=False
+import gc
 def url_maker_following(Name,page_number):
     return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=following"
 def url_maker_follower(Name,page_number):
@@ -23,6 +27,7 @@ def user_list_gen(input_string,follower_name):
 
 
 def get_html(url):
+    time.sleep(create_random_sleep())
     if internet()==True:
         new_session=requests.session()
         new_session.cookies.clear()
@@ -103,16 +108,50 @@ def internet(host="8.8.8.8", port=53, timeout=3):
         error_log(str(ex))
         return False
 
+def create_random_sleep(index=1,min_time=1,max_time=7):
+    '''
+    This function generate sleep time with random processes
+    :param index: index to determine first page  and messages(index = 0 is for first page)
+    :param min_time: minimum time of sleep
+    :param max_time: maximum time of sleep
+    :type index:int
+    :type min_time:int
+    :type max_time:int
+    :return: time of sleep as integer (a number between max and min)
+    '''
+    if index==0:
+        time_sleep = 5
+        if DEBUG==True:
+            print("Wait "+str(time_sleep)+" sec for first search . . .")
+    else:
+        time_sleep = randint(min_time, max_time)
+        if DEBUG==True:
+            print("Wait "+str(time_sleep)+" sec for next search . . .")
+    if DEBUG==True:
+        print_line(70,"*")
+    return time_sleep
+
+def print_line(number=30,char="-"):
+    '''
+    This function print line in screen
+    :param number: number of items in each line
+    :param char: each char of line
+    :return: None
+    '''
+    line=""
+    for i in range(number):
+        line=line+char
+    print(line)
 if __name__=="__main__":
     follower_name="sepandhaghighi"
-    file=open(follower_name+"_follower.log","w")
     print("Collecting Follower Information ...")
     list_1=follower_list_gen(follower_name)
+    file = open(follower_name + "_follower.log", "w")
     file.write("\n".join(list_1))
     file.close()
-    file=open(follower_name+"_following.log","w")
     print('Collecting Following Informnation ...')
     list_2=following_list_gen(follower_name)
+    file = open(follower_name + "_following.log", "w")
     file.write("\n".join(list_2))
     file.close()
     following_not_follower=[]
@@ -122,6 +161,7 @@ if __name__=="__main__":
             following_not_follower.append(i)
             file.write(i+"\n")
     file.close()
+    gc.collect()
 
 
 
