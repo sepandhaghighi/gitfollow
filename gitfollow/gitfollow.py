@@ -190,24 +190,59 @@ def print_line(number=30,char="-"):
     for i in range(number):
         line=line+char
     print(line)
-if __name__=="__main__":
-    time_1=time.perf_counter()
-    username=input("Please Enter Your Github Username : ")
+
+
+def follow(username):
+    '''
+    This function create following and follower list
+    :param username: username
+    :type username:str
+    :return: (list_1,list_2) as tuple
+    '''
     print("Collecting Follower Information ...")
-    list_1=follower_list_gen(username)
+    print_line(70, "*")
+    list_1 = follower_list_gen(username)
     file = open(username + "_follower.log", "w")
+    print(str(len(list_1)) + " Followers --> " + username + "_follower.log")
+    print_line(70, "*")
     file.write("\n".join(list_1))
     file.close()
     print('Collecting Following Informnation ...')
-    list_2=following_list_gen(username)
+    print_line(70, "*")
+    list_2 = following_list_gen(username)
     file = open(username + "_following.log", "w")
+    print(str(len(list_2)) + " Following --> " + username + "_following.log")
+    print_line(70, "*")
     file.write("\n".join(list_2))
     file.close()
-    following_not_follower=[]
-    file=open(username+"_dif.log","w")
-    dif_list=list(set(list_2)-set(list_1))
+    return (list_1,list_2)
+
+def dif(list_1,list_2):
+    '''
+    This function generate dif files
+    :param list_1:follower list
+    :param list_2: following list
+    :type list_1:list
+    :type list_2:list
+    :return: None
+    '''
+    file = open(username + "_dif1.log", "w")
+    dif_list = list(set(list_2) - set(list_1))
+    print(str(len(dif_list)) + " Following - Not Follower --> " + username + "_dif1.log")
+    print_line(70, "*")
     file.write("\n".join(dif_list))
     file.close()
+    file = open(username + "_dif2.log", "w")
+    dif_list = list(set(list_1) - set(list_2))
+    print(str(len(dif_list)) + " Follower - Not Following --> " + username + "_dif2.log")
+    print_line(70, "*")
+    file.write("\n".join(dif_list))
+    file.close()
+if __name__=="__main__":
+    time_1=time.perf_counter()
+    username=input("Please Enter Your Github Username : ")
+    (list_1,list_2)=follow(username)
+    dif(list_1,list_2)
     time_2=time.perf_counter()
     print("Data Generated In "+str(time_2-time_1)+" sec")
     print("Log Files Are Ready --> " + os.getcwd())
