@@ -15,16 +15,13 @@ if __name__=="__main__":
     file.close()
     following_not_follower=[]
     file=open(username+"_dif.log","w")
-    for i in list_2:
-        if i not in list_1:
-            following_not_follower.append(i)
-            file.write(i+"\n")
+    dif_list=list(set(list_2)-set(list_1))
+    file.write("\n".join(dif_list))
     file.close()
     time_2=time.perf_counter()
     print("Data Generated In "+str(time_2-time_1)+" sec")
-    print("Log Files Are Ready --> "+os.getcwd())
+    print("Log Files Are Ready --> " + os.getcwd())
     gc.collect()
-
 
 
 
