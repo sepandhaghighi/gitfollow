@@ -6,8 +6,8 @@
 <h1>Gitfollow</h1>
 
 
-<a href=""><img src="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/badges/quality-score.png?b=master"></a>
-<a href=""><img src="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/badges/build.png?b=master"></a>
+<a href="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/"><img src="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/badges/quality-score.png?b=master"></a>
+<a href="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/"><img src="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/badges/build.png?b=master"></a>
 
 
 </div>
