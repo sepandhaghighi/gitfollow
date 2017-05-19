@@ -57,7 +57,26 @@ def url_maker_follower(Name,page_number):
     :return: github follower url as string
     '''
     return "https://github.com/" + Name + "?page=" + str(page_number) + "&tab=followers"
-
+def url_maker_star(Name,page_number):
+    return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=stars"
+def star_extract(input_string):
+    '''
+    This function extract stared repo from raw_html
+    :param input_string: raw input html
+    :param follower_name: follower_name
+    :type input_string:str
+    :type follower_name:str
+    :return: user_list as list
+    '''
+    user_list=[]
+    index=0
+    while(index!=-1):
+        index=input_string.find('<a class="muted-link mr-3',index+33,len(input_string))
+        length=input_string[index+33:].find('stargazers">\n')
+        star_repo=input_string[index+34:index+33+length]
+        if star_repo.find("<svg")==-1 and len(star_repo)!=0:
+            user_list.append(star_repo)
+    return user_list
 def user_list_gen(input_string,follower_name):
     '''
     This function extract usernames from raw_html
@@ -131,6 +150,25 @@ def follower_list_gen(follower_name):
         temp_list = user_list_gen(follower_html,follower_name)
         follower_list.extend(temp_list)
     return follower_list
+def star_list(username):
+    '''
+    This function return stared_repo list
+    :param username: username
+    :type username:str
+    :return: stared repo as list
+    '''
+    star_list=[]
+    page_number=0
+    while (True):
+        page_number += 1
+        star_url = url_maker_star(username, page_number)
+        star_html = get_html(star_url)
+        temp_list = star_extract(star_html)
+        if len(temp_list)==0:
+            break
+        star_list.extend(temp_list)
+    return star_list
+
 def following_list_gen(follower_name):
     '''
     This function generate following list
@@ -243,6 +281,12 @@ def follow(username):
     print(str(len(list_2)) + " Following --> " + username + "_following.log")
     print_line(70, "*")
     file.write("\n".join(list_2))
+    file.close()
+    stars=star_list(username)
+    file = open(username + "_stars.log", "w")
+    print(str(len(stars)) + " Stars --> " + username + "_stars.log")
+    print_line(70, "*")
+    file.write("\n".join(stars))
     file.close()
     return (list_1,list_2)
 
