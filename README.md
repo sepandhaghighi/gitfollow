@@ -32,6 +32,14 @@
 Just fill an issue and describe it. We'll check it ASAP!							
 or send an email to [sepand@qpage.ir](mailto:sepand@qpage.ir "sepand@qpage.ir"). 
 
+## TODO		
+
+- [x] Follower-List
+- [x] Following-List
+- [x] Dif-list
+- [ ] Stargazers-List
+- [ ] Unfollow
+
 
 ## Contribution			
 
