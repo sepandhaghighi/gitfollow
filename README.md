@@ -34,11 +34,14 @@ or send an email to [sepand@qpage.ir](mailto:sepand@qpage.ir "sepand@qpage.ir").
 
 ## TODO		
 
-- [x] Follower-List
-- [x] Following-List
-- [x] Dif-list
-- [ ] Stargazers-List
-- [ ] Unfollow
+- [ ] List
+	- [x] Follower-List
+	- [x] Following-List
+	- [x] Dif-list
+	- [ ] Stargazers-List
+- [ ] Control
+	- [ ] Automatic Unfollow
+	- [ ] Automatic Follow
 
 
 ## Contribution			
