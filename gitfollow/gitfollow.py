@@ -58,6 +58,14 @@ def url_maker_follower(Name,page_number):
     '''
     return "https://github.com/" + Name + "?page=" + str(page_number) + "&tab=followers"
 def url_maker_star(Name,page_number):
+    '''
+    This function return github stars page url
+    :param Name: username
+    :param page_number: page number of stars
+    :type Name :str
+    :type page_number:int
+    :return: github star url as string
+    '''
     return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=stars"
 def star_extract(input_string):
     '''
@@ -282,6 +290,8 @@ def follow(username):
     print_line(70, "*")
     file.write("\n".join(list_2))
     file.close()
+    print('Collecting Stars Informnation ...')
+    print_line(70, "*")
     stars=star_list(username)
     file = open(username + "_stars.log", "w")
     print(str(len(stars)) + " Stars --> " + username + "_stars.log")
