@@ -47,6 +47,17 @@ def url_maker_following(Name,page_number):
     :return: github following url as string
     '''
     return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=following"
+
+def url_maker_repo(Name,page_number):
+    '''
+    This function return github following page url
+    :param Name: Username
+    :param page_number: page nubmer of following page
+    :type Name:str
+    :type Page:int
+    :return: github following url as string
+    '''
+    return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=repositories"
 def url_maker_follower(Name,page_number):
     '''
     This function return github follower page url
@@ -67,6 +78,25 @@ def url_maker_star(Name,page_number):
     :return: github star url as string
     '''
     return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=stars"
+def repo_extract(input_string,username):
+    '''
+    This function extract repo from raw_html
+    :param input_string: raw input html
+    :param follower_name: follower_name
+    :type input_string:str
+    :type follower_name:str
+    :return: repo_list as list
+    '''
+    user_list=[]
+    index=0
+    shift=len(username)+1
+    while(index!=-1):
+        index=input_string.find('src="/'+username,index+shift,len(input_string))
+        length=input_string[index:].find('graphs/')
+        star_repo=input_string[index+5:index+length]
+        if star_repo.find("<svg")==-1 and len(star_repo)!=0:
+            user_list.append(star_repo)
+    return user_list
 def star_extract(input_string):
     '''
     This function extract stared repo from raw_html
@@ -85,6 +115,7 @@ def star_extract(input_string):
         if star_repo.find("<svg")==-1 and len(star_repo)!=0:
             user_list.append(star_repo)
     return user_list
+
 def user_list_gen(input_string,follower_name):
     '''
     This function extract usernames from raw_html
@@ -158,6 +189,24 @@ def follower_list_gen(follower_name):
         temp_list = user_list_gen(follower_html,follower_name)
         follower_list.extend(temp_list)
     return follower_list
+def repo_list(username):
+    '''
+    This function return stared_repo list
+    :param username: username
+    :type username:str
+    :return: stared repo as list
+    '''
+    repo_list_temp=[]
+    page_number=0
+    while (True):
+        page_number += 1
+        repo_url = url_maker_repo(username, page_number)
+        repo_html = get_html(repo_url)
+        temp_list = repo_extract(repo_html,username)
+        if len(temp_list)==0:
+            break
+        repo_list_temp.extend(temp_list)
+    return repo_list_temp
 def star_list(username):
     '''
     This function return stared_repo list
@@ -297,6 +346,15 @@ def follow(username):
     print(str(len(stars)) + " Stars --> " + username + "_stars.log")
     print_line(70, "*")
     file.write("\n".join(stars))
+    file.close()
+
+    print('Collecting Repos Informnation ...')
+    print_line(70, "*")
+    repos = repo_list(username)
+    file = open(username + "_repos.log", "w")
+    print(str(len(repos)) + " Repos --> " + username + "_repos.log")
+    print_line(70, "*")
+    file.write("\n".join(repos))
     file.close()
     return (list_1,list_2)
 
