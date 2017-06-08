@@ -50,12 +50,12 @@ def url_maker_following(Name,page_number):
 
 def url_maker_repo(Name,page_number):
     '''
-    This function return github following page url
+    This function return github repo page url
     :param Name: Username
-    :param page_number: page nubmer of following page
+    :param page_number: page nubmer of repos page
     :type Name:str
     :type Page:int
-    :return: github following url as string
+    :return: github repos url as string
     '''
     return "https://github.com/"+Name+"?page="+str(page_number)+"&tab=repositories"
 def url_maker_follower(Name,page_number):
@@ -82,21 +82,25 @@ def repo_extract(input_string,username):
     '''
     This function extract repo from raw_html
     :param input_string: raw input html
-    :param follower_name: follower_name
+    :param user_name: user_name
     :type input_string:str
-    :type follower_name:str
+    :type user_name:str
     :return: repo_list as list
     '''
-    user_list=[]
-    index=0
-    shift=len(username)+1
-    while(index!=-1):
-        index=input_string.find('src="/'+username,index+shift,len(input_string))
-        length=input_string[index:].find('graphs/')
-        star_repo=input_string[index+5:index+length]
-        if star_repo.find("<svg")==-1 and len(star_repo)!=0:
-            user_list.append(star_repo)
-    return user_list
+    try:
+        user_list=[]
+        index=0
+        shift=len(username)+1
+        while(index!=-1):
+            index=input_string.find('src="/'+username,index+shift,len(input_string))
+            length=input_string[index:].find('graphs/')
+            star_repo=input_string[index+5:index+length]
+            if star_repo.find("<svg")==-1 and len(star_repo)!=0:
+                user_list.append(star_repo)
+        return user_list
+    except Exception as ex:
+        pass
+
 def star_extract(input_string):
     '''
     This function extract stared repo from raw_html
@@ -108,13 +112,16 @@ def star_extract(input_string):
     '''
     user_list=[]
     index=0
-    while(index!=-1):
-        index=input_string.find('<a class="muted-link mr-3',index+33,len(input_string))
-        length=input_string[index+33:].find('stargazers">\n')
-        star_repo=input_string[index+34:index+33+length]
-        if star_repo.find("<svg")==-1 and len(star_repo)!=0:
-            user_list.append(star_repo)
-    return user_list
+    try:
+        while(index!=-1):
+            index=input_string.find('<a class="muted-link mr-3',index+33,len(input_string))
+            length=input_string[index+33:].find('stargazers">\n')
+            star_repo=input_string[index+34:index+33+length]
+            if star_repo.find("<svg")==-1 and len(star_repo)!=0:
+                user_list.append(star_repo)
+        return user_list
+    except Exception as ex:
+        pass
 
 def user_list_gen(input_string,follower_name):
     '''
@@ -125,18 +132,19 @@ def user_list_gen(input_string,follower_name):
     :type follower_name:str
     :return: user_list as list
     '''
-    user_list=[]
-    index=0
-    while(index!=-1):
-        index=input_string.find('alt="@',index+6,len(input_string))
-        length=input_string[index+6:].find('"')
-        user_name=input_string[index+6:index+6+length]
-        if user_name!=follower_name:
+    try:
+        user_list = []
+        index = 0
+        while(index!=-1):
+            index=input_string.find('alt="@',index+6,len(input_string))
+            length=input_string[index+6:].find('"')
+            user_name=input_string[index+6:index+6+length]
             if user_name!=follower_name:
-                user_list.append(user_name)
-    return user_list[:-1]
-
-
+                if user_name!=follower_name:
+                    user_list.append(user_name)
+        return user_list[:-1]
+    except Exception as ex:
+        pass
 def get_html(url):
     '''
     This function extract raw_html file
@@ -157,7 +165,7 @@ def get_html(url):
         return raw_data
     else:
         print("Error In Internet")
-        sys.exit()
+        pass
 
 
 def end_check(input_string):
@@ -178,17 +186,20 @@ def follower_list_gen(follower_name):
     :type follower_name:str
     :return: username follower list
     '''
-    follower_list = []
-    page_number=0
-    while (True):
-        page_number += 1
-        follower_url = url_maker_follower(follower_name, page_number)
-        follower_html = get_html(follower_url)
-        if end_check(follower_html) == True:
-            break
-        temp_list = user_list_gen(follower_html,follower_name)
-        follower_list.extend(temp_list)
-    return follower_list
+    try:
+        follower_list = []
+        page_number=0
+        while (True):
+            page_number += 1
+            follower_url = url_maker_follower(follower_name, page_number)
+            follower_html = get_html(follower_url)
+            if end_check(follower_html) == True:
+                break
+            temp_list = user_list_gen(follower_html,follower_name)
+            follower_list.extend(temp_list)
+        return follower_list
+    except Exception as ex:
+        error_log("Error In Page "+str(page_number)+" Follower Page")
 def repo_list(username):
     '''
     This function return stared_repo list
@@ -196,17 +207,20 @@ def repo_list(username):
     :type username:str
     :return: stared repo as list
     '''
-    repo_list_temp=[]
-    page_number=0
-    while (True):
-        page_number += 1
-        repo_url = url_maker_repo(username, page_number)
-        repo_html = get_html(repo_url)
-        temp_list = repo_extract(repo_html,username)
-        if len(temp_list)==0:
-            break
-        repo_list_temp.extend(temp_list)
-    return repo_list_temp
+    try:
+        repo_list_temp=[]
+        page_number=0
+        while (True):
+            page_number += 1
+            repo_url = url_maker_repo(username, page_number)
+            repo_html = get_html(repo_url)
+            temp_list = repo_extract(repo_html,username)
+            if len(temp_list)==0:
+                break
+            repo_list_temp.extend(temp_list)
+        return repo_list_temp
+    except Exception as ex:
+        error_log("Error In Page " + str(page_number) + " Repos Page")
 def star_list(username):
     '''
     This function return stared_repo list
@@ -214,17 +228,20 @@ def star_list(username):
     :type username:str
     :return: stared repo as list
     '''
-    star_list=[]
-    page_number=0
-    while (True):
-        page_number += 1
-        star_url = url_maker_star(username, page_number)
-        star_html = get_html(star_url)
-        temp_list = star_extract(star_html)
-        if len(temp_list)==0:
-            break
-        star_list.extend(temp_list)
-    return star_list
+    try:
+        star_list=[]
+        page_number=0
+        while (True):
+            page_number += 1
+            star_url = url_maker_star(username, page_number)
+            star_html = get_html(star_url)
+            temp_list = star_extract(star_html)
+            if len(temp_list)==0:
+                break
+            star_list.extend(temp_list)
+        return star_list
+    except Exception as ex:
+        error_log("Error In Page " + str(page_number) + " Stars Page")
 
 def following_list_gen(follower_name):
     '''
@@ -233,17 +250,20 @@ def following_list_gen(follower_name):
     :type follower_name:str
     :return: username following list
     '''
-    following_list = []
-    page_number=0
-    while (True):
-        page_number+=1
-        following_url = url_maker_following(follower_name, page_number)
-        following_html = get_html(following_url)
-        if end_check(following_html) == True:
-            break
-        temp_list = user_list_gen(following_html,follower_name)
-        following_list.extend(temp_list)
-    return following_list
+    try:
+        following_list = []
+        page_number=0
+        while (True):
+            page_number+=1
+            following_url = url_maker_following(follower_name, page_number)
+            following_html = get_html(following_url)
+            if end_check(following_html) == True:
+                break
+            temp_list = user_list_gen(following_html,follower_name)
+            following_list.extend(temp_list)
+        return following_list
+    except Exception as ex:
+        error_log("Error In Page " + str(page_number) + " Following Page")
 
 def error_log(msg):
     """
@@ -277,7 +297,6 @@ def internet(host="8.8.8.8", port=53, timeout=3):
         socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
         return True
     except Exception as ex:
-        error_log(str(ex))
         return False
 
 def create_random_sleep(index=1,min_time=1,max_time=3):
@@ -323,40 +342,43 @@ def follow(username):
     :type username:str
     :return: (list_1,list_2) as tuple
     '''
-    print("Collecting Follower Information ...")
-    print_line(70, "*")
-    list_1 = follower_list_gen(username)
-    file = open(username + "_follower.log", "w")
-    print(str(len(list_1)) + " Followers --> " + username + "_follower.log")
-    print_line(70, "*")
-    file.write("\n".join(list_1))
-    file.close()
-    print('Collecting Following Informnation ...')
-    print_line(70, "*")
-    list_2 = following_list_gen(username)
-    file = open(username + "_following.log", "w")
-    print(str(len(list_2)) + " Following --> " + username + "_following.log")
-    print_line(70, "*")
-    file.write("\n".join(list_2))
-    file.close()
-    print('Collecting Stars Informnation ...')
-    print_line(70, "*")
-    stars=star_list(username)
-    file = open(username + "_stars.log", "w")
-    print(str(len(stars)) + " Stars --> " + username + "_stars.log")
-    print_line(70, "*")
-    file.write("\n".join(stars))
-    file.close()
+    try:
+        print("Collecting Follower Information ...")
+        print_line(70, "*")
+        list_1 = follower_list_gen(username)
+        file = open(username + "_follower.log", "w")
+        print(str(len(list_1)) + " Followers --> " + username + "_follower.log")
+        print_line(70, "*")
+        file.write("\n".join(list_1))
+        file.close()
+        print('Collecting Following Informnation ...')
+        print_line(70, "*")
+        list_2 = following_list_gen(username)
+        file = open(username + "_following.log", "w")
+        print(str(len(list_2)) + " Following --> " + username + "_following.log")
+        print_line(70, "*")
+        file.write("\n".join(list_2))
+        file.close()
+        print('Collecting Stars Informnation ...')
+        print_line(70, "*")
+        stars=star_list(username)
+        file = open(username + "_stars.log", "w")
+        print(str(len(stars)) + " Stars --> " + username + "_stars.log")
+        print_line(70, "*")
+        file.write("\n".join(stars))
+        file.close()
 
-    print('Collecting Repos Informnation ...')
-    print_line(70, "*")
-    repos = repo_list(username)
-    file = open(username + "_repos.log", "w")
-    print(str(len(repos)) + " Repos --> " + username + "_repos.log")
-    print_line(70, "*")
-    file.write("\n".join(repos))
-    file.close()
-    return (list_1,list_2)
+        print('Collecting Repos Informnation ...')
+        print_line(70, "*")
+        repos = repo_list(username)
+        file = open(username + "_repos.log", "w")
+        print(str(len(repos)) + " Repos --> " + username + "_repos.log")
+        print_line(70, "*")
+        file.write("\n".join(repos))
+        file.close()
+        return (list_1,list_2)
+    except Exception as ex:
+        error_log(str(ex))
 
 def dif(list_1,list_2):
     '''
@@ -367,28 +389,34 @@ def dif(list_1,list_2):
     :type list_2:list
     :return: None
     '''
-    file = open(username + "_dif1.log", "w")
-    dif_list = list(set(list_2) - set(list_1))
-    print(str(len(dif_list)) + " Following - Not Follower --> " + username + "_dif1.log")
-    print_line(70, "*")
-    file.write("\n".join(dif_list))
-    file.close()
-    file = open(username + "_dif2.log", "w")
-    dif_list = list(set(list_1) - set(list_2))
-    print(str(len(dif_list)) + " Follower - Not Following --> " + username + "_dif2.log")
-    print_line(70, "*")
-    file.write("\n".join(dif_list))
-    file.close()
+    try:
+        file = open(username + "_NotFollower.log", "w")
+        dif_list = list(set(list_2) - set(list_1))
+        print(str(len(dif_list)) + " Following - Not Follower --> " + username + "_NotFollower.log")
+        print_line(70, "*")
+        file.write("\n".join(dif_list))
+        file.close()
+        file = open(username + "_NotFollowing.log", "w")
+        dif_list = list(set(list_1) - set(list_2))
+        print(str(len(dif_list)) + " Follower - Not Following --> " + username + "_NotFollowing.log")
+        print_line(70, "*")
+        file.write("\n".join(dif_list))
+        file.close()
+    except Exception as ex:
+        pass
 if __name__=="__main__":
-    time_1=time.perf_counter()
-    username=input("Please Enter Your Github Username : ")
-    (list_1,list_2)=follow(username)
-    dif(list_1,list_2)
-    time_2=time.perf_counter()
-    dif_time=str(time_2-time_1)
-    print("Data Generated In "+time_convert(dif_time)+" sec")
-    print("Log Files Are Ready --> " + os.getcwd())
-    gc.collect()
+    try:
+        time_1=time.perf_counter()
+        username=input("Please Enter Your Github Username : ")
+        (list_1,list_2)=follow(username)
+        dif(list_1,list_2)
+        time_2=time.perf_counter()
+        dif_time=str(time_2-time_1)
+        print("Data Generated In "+time_convert(dif_time)+" sec")
+        print("Log Files Are Ready --> " + os.getcwd())
+        gc.collect()
+    except Exception as ex:
+        error_log(str(ex))
 
 
 

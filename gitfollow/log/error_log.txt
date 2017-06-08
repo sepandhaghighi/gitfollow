@@ -1,0 +1,9 @@
+2017-06-08 21:52:26.539484 --> [WinError 10065] A socket operation was attempted to an unreachable host
+2017-06-08 21:52:26.548412 --> 'NoneType' object has no attribute 'find'
+2017-06-08 21:52:26.557511 --> object of type 'NoneType' has no len()
+2017-06-08 21:52:26.565460 --> 'NoneType' object is not iterable
+2017-06-08 21:54:29.547883 --> object of type 'NoneType' has no len()
+2017-06-08 21:54:29.562919 --> 'NoneType' object is not iterable
+2017-06-08 21:58:09.796665 --> Error In Page 1 Follower Page
+2017-06-08 21:58:09.805688 --> object of type 'NoneType' has no len()
+2017-06-08 21:58:09.814714 --> 'NoneType' object is not iterable
