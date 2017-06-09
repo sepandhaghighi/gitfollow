@@ -179,7 +179,7 @@ def end_check(input_string):
         return True
     else:
         return False
-def follower_list_gen(follower_name):
+def follower_list_gen(follower_name,page_number=0,counter=0):
     '''
     This function generate follower_list
     :param follower_name: username
@@ -188,7 +188,6 @@ def follower_list_gen(follower_name):
     '''
     try:
         follower_list = []
-        page_number=0
         while (True):
             page_number += 1
             follower_url = url_maker_follower(follower_name, page_number)
@@ -199,8 +198,11 @@ def follower_list_gen(follower_name):
             follower_list.extend(temp_list)
         return follower_list
     except Exception as ex:
+        if counter>3:
+            sys.exit()
         error_log("Error In Page "+str(page_number)+" Follower Page")
-def repo_list(username):
+        follower_list_gen(follower_name,page_number,counter+1)
+def repo_list(username,page_number=0,counter=0):
     '''
     This function return stared_repo list
     :param username: username
@@ -209,7 +211,6 @@ def repo_list(username):
     '''
     try:
         repo_list_temp=[]
-        page_number=0
         while (True):
             page_number += 1
             repo_url = url_maker_repo(username, page_number)
@@ -220,8 +221,11 @@ def repo_list(username):
             repo_list_temp.extend(temp_list)
         return repo_list_temp
     except Exception as ex:
+        if counter>3:
+            sys.exit()
         error_log("Error In Page " + str(page_number) + " Repos Page")
-def star_list(username):
+        repo_list(username,page_number,counter+1)
+def star_list(username,page_number=0,counter=0):
     '''
     This function return stared_repo list
     :param username: username
@@ -229,8 +233,7 @@ def star_list(username):
     :return: stared repo as list
     '''
     try:
-        star_list=[]
-        page_number=0
+        star_list_temp=[]
         while (True):
             page_number += 1
             star_url = url_maker_star(username, page_number)
@@ -238,12 +241,15 @@ def star_list(username):
             temp_list = star_extract(star_html)
             if len(temp_list)==0:
                 break
-            star_list.extend(temp_list)
-        return star_list
+            star_list_temp.extend(temp_list)
+        return star_list_temp
     except Exception as ex:
+        if counter>3:
+            sys.exit()
         error_log("Error In Page " + str(page_number) + " Stars Page")
+        star_list(username,page_number,counter+1)
 
-def following_list_gen(follower_name):
+def following_list_gen(follower_name,page_number=0,counter=0):
     '''
     This function generate following list
     :param follower_name: username
@@ -252,7 +258,6 @@ def following_list_gen(follower_name):
     '''
     try:
         following_list = []
-        page_number=0
         while (True):
             page_number+=1
             following_url = url_maker_following(follower_name, page_number)
@@ -263,7 +268,10 @@ def following_list_gen(follower_name):
             following_list.extend(temp_list)
         return following_list
     except Exception as ex:
+        if counter>3:
+            sys.exit()
         error_log("Error In Page " + str(page_number) + " Following Page")
+        following_list_gen(follower_name,page_number,counter+1)
 
 def error_log(msg):
     """
