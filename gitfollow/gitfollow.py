@@ -465,7 +465,7 @@ def run(func=input):
     gc.collect()
 
 
-def test_function():
+def test_function(a):
     return "test_item"
 
 
