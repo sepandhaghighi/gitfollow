@@ -65,6 +65,7 @@ True
 >>> data.find("log_test")
 >>> unfollow("sarminh","password_test",["id_1","id_2"])
 >>> follow("sarminh","password_test",["id_1","id_2"])
+>>> run(func=test_function())
 >>> cov.stop()
 >>> cov.save()
 
