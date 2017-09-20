@@ -63,9 +63,14 @@ True
 >>> file=open(os.path.join("log","error_log.txt"),"r")
 >>> data=file.read()
 >>> data.find("log_test")
+31
 >>> unfollow("sarminh","password_test",["id_1","id_2"])
+[Error] Authentication Error
 >>> follow("sarminh","password_test",["id_1","id_2"])
->>> run(func=test_function())
+Traceback (most recent call last):
+        ...
+SystemExit
+>>> run(func=test_function)
 >>> cov.stop()
 >>> cov.save()
 
