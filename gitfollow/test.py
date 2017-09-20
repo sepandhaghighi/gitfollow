@@ -1,7 +1,10 @@
 '''
+>>> import coverage
 >>> from gitfollow import *
 >>> from random import seed
 >>> import os
+>>> cov = coverage.Coverage()
+>>> cov.start()
 >>> zero_insert("22")
 '22'
 >>> zero_insert("320")
@@ -40,5 +43,7 @@ True
 >>> error_log("log_test")
 >>> file=open(os.path.join("log","error_log.txt"),"r")
 >>> print(file.read())
+>>> cov.stop()
+>>> cov.save()
 
 '''
