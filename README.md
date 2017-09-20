@@ -23,9 +23,10 @@
 ### Source Code
 - Download  [Latest Source ](https://github.com/sepandhaghighi/gitfollow/archive/master.zip)
 
-- `python3 setup.py install`
+- `python3 setup.py install` or `python setup.py install`
 
 ## Usage ##
+- `python3 -m gitfollow` or `python -m gitfollow`
 - Enter your username & wait
 - Find your data in log files
 
@@ -42,6 +43,7 @@ or send an email to [sepand@qpage.ir](mailto:sepand@qpage.ir "sepand@qpage.ir").
 	- [x] Following-List
 	- [x] Dif-list
 	- [x] Stargazers-List
+	- [x] Repo-List
 - [x] Control
 	- [x] Unfollow
 	- [x] Follow
