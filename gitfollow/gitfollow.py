@@ -6,6 +6,7 @@ import datetime
 from functools import reduce
 import time
 from random import randint
+import sys
 DEBUG=False
 import gc
 
@@ -343,7 +344,7 @@ def print_line(number=30,char="-"):
     print(line)
 
 
-def follow(username):
+def list_maker(username):
     '''
     This function create following and follower list
     :param username: username
@@ -388,7 +389,7 @@ def follow(username):
     except Exception as ex:
         error_log(str(ex))
 
-def dif(list_1,list_2):
+def dif(list_1,list_2,username):
     '''
     This function generate dif files
     :param list_1:follower list
@@ -399,29 +400,70 @@ def dif(list_1,list_2):
     '''
     try:
         file = open(username + "_NotFollower.log", "w")
-        dif_list = list(set(list_2) - set(list_1))
-        print(str(len(dif_list)) + " Following - Not Follower --> " + username + "_NotFollower.log")
+        dif_list_1 = list(set(list_2) - set(list_1))
+        print(str(len(dif_list_1)) + " Following - Not Follower --> " + username + "_NotFollower.log")
         print_line(70, "*")
-        file.write("\n".join(dif_list))
+        file.write("\n".join(dif_list_1))
         file.close()
         file = open(username + "_NotFollowing.log", "w")
-        dif_list = list(set(list_1) - set(list_2))
-        print(str(len(dif_list)) + " Follower - Not Following --> " + username + "_NotFollowing.log")
+        dif_list_2 = list(set(list_1) - set(list_2))
+        print(str(len(dif_list_2)) + " Follower - Not Following --> " + username + "_NotFollowing.log")
         print_line(70, "*")
-        file.write("\n".join(dif_list))
+        file.write("\n".join(dif_list_2))
         file.close()
+        return [dif_list_1,dif_list_2]
     except Exception as ex:
-        pass
+        print(str(ex))
+def unfollow(username,password,id_list):
+    for user in id_list:
+        response=requests.delete("https://api.github.com/user/following/" + user, auth=(username, password))
+        status_code=int(response.status_code)
+        if status_code!=204:
+            if status_code==401:
+                print("[Error] Authentication Error")
+                break
+            else:
+                print("[Error] in " + user + " unfollow!")
+        else:
+            print(user+" Unfollowed")
+        time.sleep(3)
+def follow(username,password,id_list):
+    for user in id_list:
+        response = requests.put("https://api.github.com/user/following/" + user, auth=(username, password))
+        status_code = int(response.status_code)
+        if status_code!=204:
+            if status_code==401:
+                print("[Error] Authentication Error")
+                sys.exit()
+            else:
+                print("[Error] in "+user+" follow!")
+        else:
+            print(user+" Followed")
+        time.sleep(3)
+
 if __name__=="__main__":
     try:
+        password=""
         time_1=time.perf_counter()
         username=input("Please Enter Your Github Username : ")
-        (list_1,list_2)=follow(username)
-        dif(list_1,list_2)
+        (list_1,list_2)=list_maker(username)
+        dif_lists=dif(list_1,list_2,username)
+        print(dif_lists)
         time_2=time.perf_counter()
         dif_time=str(time_2-time_1)
         print("Data Generated In "+time_convert(dif_time)+" sec")
         print("Log Files Are Ready --> " + os.getcwd())
+        input_data=input("Unfollow Non-follower?Yes[y],No[n] ")
+        if input_data.upper()=="Y":
+            password=input("Please Enter Password : ")
+            print("Processing ... ")
+            unfollow(username,password,dif_lists[0])
+        input_data = input("Follow Non-following?Yes[y],No[n] ")
+        if input_data.upper()=="Y":
+            if len(password)<1:
+                password=input("Please Enter Password : ")
+            print("Processing ... ")
+            follow(username,password,dif_lists[1])
         gc.collect()
     except Exception as ex:
         error_log(str(ex))
