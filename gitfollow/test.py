@@ -27,6 +27,8 @@
 >>> repo_lists=repo_list("sarminh",page_number=0,counter=0)
 >>> star_lists=star_list("sarminh",page_number=0,counter=0)
 >>> following_lists=following_list_gen("sarminh",page_number=0,counter=0)
+>>> follower_lists=follower_list_gen("sarminh",page_number=0,counter=0)
+>>> list_maker("sarminh")
 >>> internet(host="8.8.8.8", port=53, timeout=3)
 True
 >>> seed(2)
@@ -43,6 +45,8 @@ True
 >>> error_log("log_test")
 >>> file=open(os.path.join("log","error_log.txt"),"r")
 >>> print(file.read())
+2017-09-20 20:19:01.520236 --> log_test
+<BLANKLINE>
 >>> cov.stop()
 >>> cov.save()
 
