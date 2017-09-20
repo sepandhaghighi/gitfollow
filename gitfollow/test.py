@@ -70,7 +70,6 @@ True
 Traceback (most recent call last):
         ...
 SystemExit
->>> run(func=test_function)
 >>> cov.stop()
 >>> cov.save()
 

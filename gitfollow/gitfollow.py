@@ -441,32 +441,28 @@ def follow(username,password,id_list):
             print(user+" Followed")
         time.sleep(3)
 
-def run(func=input):
+def run():
     password = ""
     time_1 = time.perf_counter()
-    username = func("Please Enter Your Github Username : ")
+    username = input("Please Enter Your Github Username : ")
     (list_1, list_2) = list_maker(username)
     dif_lists = dif(list_1, list_2, username)
     time_2 = time.perf_counter()
     dif_time = str(time_2 - time_1)
     print("Data Generated In " + time_convert(dif_time) + " sec")
     print("Log Files Are Ready --> " + os.getcwd())
-    input_data = func("Unfollow Non-follower?Yes[y],No[n] ")
+    input_data = input("Unfollow Non-follower?Yes[y],No[n] ")
     if input_data.upper() == "Y":
-        password = func("Please Enter Password : ")
+        password = input("Please Enter Password : ")
         print("Processing ... ")
         unfollow(username, password, dif_lists[0])
-    input_data = func("Follow Non-following?Yes[y],No[n] ")
+    input_data = input("Follow Non-following?Yes[y],No[n] ")
     if input_data.upper() == "Y":
         if len(password) < 1:
-            password = func("Please Enter Password : ")
+            password = input("Please Enter Password : ")
         print("Processing ... ")
         follow(username, password, dif_lists[0])
     gc.collect()
-
-
-def test_function(a):
-    return "test_item"
 
 
 
