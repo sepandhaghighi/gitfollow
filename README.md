@@ -7,7 +7,10 @@
 
 
 <a href="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/"><img src="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/badges/quality-score.png?b=master"></a>
-<a href="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/"><img src="https://scrutinizer-ci.com/g/sepandhaghighi/gitfollow/badges/build.png?b=master"></a>
+<a href="https://travis-ci.org/sepandhaghighi/gitfollow"><img src="https://travis-ci.org/sepandhaghighi/gitfollow.svg?branch=master"></a>
+<a href="https://codecov.io/gh/sepandhaghighi/gitfollow">
+  <img src="https://codecov.io/gh/sepandhaghighi/gitfollow/branch/master/graph/badge.svg" alt="Codecov" />
+</a>
 
 
 </div>
