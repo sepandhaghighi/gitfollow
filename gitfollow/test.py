@@ -29,6 +29,23 @@
 >>> following_lists=following_list_gen("sarminh",page_number=0,counter=0)
 >>> follower_lists=follower_list_gen("sarminh",page_number=0,counter=0)
 >>> list_maker("sarminh")
+Collecting Follower Information ...
+**********************************************************************
+0 Followers --> sarminh_follower.log
+**********************************************************************
+Collecting Following Informnation ...
+**********************************************************************
+1 Following --> sarminh_following.log
+**********************************************************************
+Collecting Stars Informnation ...
+**********************************************************************
+0 Stars --> sarminh_stars.log
+**********************************************************************
+Collecting Repos Informnation ...
+**********************************************************************
+0 Repos --> sarminh_repos.log
+**********************************************************************
+([], ['sepandhaghighi'])
 >>> internet(host="8.8.8.8", port=53, timeout=3)
 True
 >>> seed(2)
@@ -44,9 +61,10 @@ True
 [['test5', 'test6'], ['test1']]
 >>> error_log("log_test")
 >>> file=open(os.path.join("log","error_log.txt"),"r")
->>> print(file.read())
-2017-09-20 20:19:01.520236 --> log_test
-<BLANKLINE>
+>>> data=file.read()
+>>> data.find("log_test")
+>>> unfollow("sarminh","password_test",["id_1","id_2"])
+>>> follow("sarminh","password_test",["id_1","id_2"])
 >>> cov.stop()
 >>> cov.save()
 
