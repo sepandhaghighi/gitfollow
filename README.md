@@ -39,9 +39,9 @@ or send an email to [sepand@qpage.ir](mailto:sepand@qpage.ir "sepand@qpage.ir").
 	- [x] Following-List
 	- [x] Dif-list
 	- [x] Stargazers-List
-- [ ] Control
-	- [ ] Automatic Unfollow
-	- [ ] Automatic Follow
+- [x] Control
+	- [x] Unfollow
+	- [x] Follow
 
 
 ## Contribution			
