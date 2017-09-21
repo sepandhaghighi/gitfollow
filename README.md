@@ -44,6 +44,7 @@ or send an email to [sepand@qpage.ir](mailto:sepand@qpage.ir "sepand@qpage.ir").
 	- [x] Dif-list
 	- [x] Stargazers-List
 	- [x] Repo-List
+	- [x] Organizations
 - [x] Control
 	- [x] Unfollow
 	- [x] Follow
