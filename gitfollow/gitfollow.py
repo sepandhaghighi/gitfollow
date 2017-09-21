@@ -123,7 +123,20 @@ def star_extract(input_string):
         return user_list
     except Exception as ex:
         pass
-
+def org_list_gen(name):
+    url=url_maker_follower(name,1)
+    raw_data=get_html(url)
+    org_index = raw_data.find("col-9 float-left pl-2")
+    org_data = raw_data[:org_index]
+    index=0
+    org_list=[]
+    while (index != -1):
+        index = org_data.find('alt="@', index + 6, len(org_data))
+        length = org_data[index + 6:].find('"')
+        org_name = org_data[index + 6:index + 6 + length]
+        if org_name != name:
+            org_list.append(org_name)
+    return org_list[:-1]
 def user_list_gen(input_string,follower_name):
     '''
     This function extract usernames from raw_html
@@ -143,8 +156,7 @@ def user_list_gen(input_string,follower_name):
             length=repo_data[index+6:].find('"')
             user_name=repo_data[index+6:index+6+length]
             if user_name!=follower_name:
-                if user_name!=follower_name:
-                    user_list.append(user_name)
+                user_list.append(user_name)
         return user_list[:-1]
     except Exception as ex:
         pass
@@ -378,7 +390,6 @@ def list_maker(username):
         print_line(70, "*")
         file.write("\n".join(stars))
         file.close()
-
         print('Collecting Repos Informnation ...')
         print_line(70, "*")
         repos = repo_list(username)
@@ -386,6 +397,15 @@ def list_maker(username):
         print(str(len(repos)) + " Repos --> " + username + "_repos.log")
         print_line(70, "*")
         file.write("\n".join(repos))
+        file.close()
+
+        print('Collecting Organizations Informnation ...')
+        print_line(70, "*")
+        orgs = org_list_gen(username)
+        file = open(username + "_orgs.log", "w")
+        print(str(len(orgs)) + " Organizations --> " + username + "_orgs.log")
+        print_line(70, "*")
+        file.write("\n".join(orgs))
         file.close()
         return (list_1,list_2)
     except Exception as ex:
