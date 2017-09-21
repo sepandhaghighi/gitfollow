@@ -70,6 +70,7 @@ True
 Traceback (most recent call last):
         ...
 SystemExit
+>>> orgs=org_list_gen("sarminh")
 >>> cov.stop()
 >>> cov.save()
 
