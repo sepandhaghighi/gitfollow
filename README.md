@@ -11,6 +11,7 @@
 <a href="https://codecov.io/gh/sepandhaghighi/gitfollow">
   <img src="https://codecov.io/gh/sepandhaghighi/gitfollow/branch/master/graph/badge.svg" alt="Codecov" />
 </a>
+<a href="https://badge.fury.io/py/gitfollow"><img src="https://badge.fury.io/py/gitfollow.svg" alt="PyPI version" height="18"></a>
 
 
 </div>
