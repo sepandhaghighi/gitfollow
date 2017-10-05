@@ -9,7 +9,12 @@ setup(
   author_email = 'sepand@qpage.ir',
   url = 'https://github.com/sepandhaghighi/gitfollow',
   download_url = 'https://github.com/sepandhaghighi/gitfollow/tarball/v0.1',
-  keywords = ['Follow', 'follower', 'github','python','git'],
+  keywords = ['Follow', 'follower', 'github','python','git','stars','repo','stargazer'],
+  install_requires=[
+	  'codecov',
+      'art',
+      'requests',
+      ],
   classifiers = [],
   license='MIT',
 )
