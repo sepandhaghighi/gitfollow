@@ -447,12 +447,16 @@ def unfollow(username,password,id_list):
         if status_code!=204:
             if status_code==401:
                 print("[Error] Authentication Error")
-                break
+                return False
+            elif status_code==403:
+                print("[Error] Maximum number of login attempts exceeded")
+                sys.exit()
             else:
                 print("[Error] in " + user + " unfollow!")
         else:
             print(user+" Unfollowed")
         time.sleep(3)
+    return True
 def follow(username,password,id_list):
     for user in id_list:
         response = requests.put("https://api.github.com/user/following/" + user, auth=(username, password))
@@ -460,12 +464,16 @@ def follow(username,password,id_list):
         if status_code!=204:
             if status_code==401:
                 print("[Error] Authentication Error")
+                return False
+            elif status_code==403:
+                print("[Error] Maximum number of login attempts exceeded")
                 sys.exit()
             else:
                 print("[Error] in "+user+" follow!")
         else:
             print(user+" Followed")
         time.sleep(3)
+    return True
 def get_input():
     tprint("git\nfollow")
     username = input("Please Enter Your Github Username : ")
@@ -474,6 +482,7 @@ def get_input():
     return [username,keys]
 def run():
     password = ""
+    auth=False
     time_1 = time.perf_counter()
     [username,keys]=get_input()
     (list_1, list_2) = list_maker(username,keys)
@@ -482,17 +491,23 @@ def run():
     dif_time = str(time_2 - time_1)
     print("Data Generated In " + time_convert(dif_time) + " sec")
     print("Log Files Are Ready --> " + os.getcwd())
-    input_data = input("Unfollow Non-follower?Yes[y],No[n] ")
-    if input_data.upper() == "Y":
-        password = input("Please Enter Password : ")
-        print("Processing ... ")
-        unfollow(username, password, dif_lists[0])
-    input_data = input("Follow Non-following?Yes[y],No[n] ")
-    if input_data.upper() == "Y":
-        if len(password) < 1:
-            password = input("Please Enter Password : ")
-        print("Processing ... ")
-        follow(username, password, dif_lists[1])
+    if len(dif_lists[0])>0:
+        input_data = input("Unfollow Non-follower?Yes[y],No[n] ")
+        if input_data.upper() == "Y":
+            while(auth==False):
+                password = input("Please Enter Password : ")
+                print("Processing ... ")
+                auth=unfollow(username, password, dif_lists[0])
+    if len(dif_lists[1])>0:
+        input_data = input("Follow Non-following?Yes[y],No[n] ")
+        if input_data.upper() == "Y":
+            if auth==True:
+                print("Processing ... ")
+                auth= follow(username, password, dif_lists[1])
+            while(auth==False):
+                password = input("Please Enter Password : ")
+                print("Processing ... ")
+                auth=follow(username, password, dif_lists[1])
     exit_string=input("Exit [E] / Restart[R] ?")
     gc.collect()
     if exit_string.upper()=="E":
