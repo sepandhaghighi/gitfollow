@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 import sys
 import socket
@@ -300,7 +301,7 @@ def error_log(msg):
     file.write(str(datetime.datetime.now()) + " --> " + str(msg) + "\n")
     file.close()
 
-def internet(host="8.8.8.8", port=53, timeout=3):
+def internet(host="8.8.8.8", port=53, timeout=10):
     """
     Check Internet Connections.
     :param  host: the host that check connection to
@@ -358,7 +359,7 @@ def print_line(number=30,char="-"):
     print(line)
 
 
-def list_maker(username):
+def list_maker(username,keyword=["1"]):
     '''
     This function create following and follower list
     :param username: username
@@ -382,31 +383,33 @@ def list_maker(username):
         print_line(70, "*")
         file.write("\n".join(list_2))
         file.close()
-        print('Collecting Stars Information ...')
-        print_line(70, "*")
-        stars=star_list(username)
-        file = open(username + "_stars.log", "w")
-        print(str(len(stars)) + " Stars --> " + username + "_stars.log")
-        print_line(70, "*")
-        file.write("\n".join(stars))
-        file.close()
-        print('Collecting Repos Information ...')
-        print_line(70, "*")
-        repos = repo_list(username)
-        file = open(username + "_repos.log", "w")
-        print(str(len(repos)) + " Repos --> " + username + "_repos.log")
-        print_line(70, "*")
-        file.write("\n".join(repos))
-        file.close()
-
-        print('Collecting Organizations Information ...')
-        print_line(70, "*")
-        orgs = org_list_gen(username)
-        file = open(username + "_orgs.log", "w")
-        print(str(len(orgs)) + " Organizations --> " + username + "_orgs.log")
-        print_line(70, "*")
-        file.write("\n".join(orgs))
-        file.close()
+        if "1" in keyword:
+            print('Collecting Stars Information ...')
+            print_line(70, "*")
+            stars=star_list(username)
+            file = open(username + "_stars.log", "w")
+            print(str(len(stars)) + " Stars --> " + username + "_stars.log")
+            print_line(70, "*")
+            file.write("\n".join(stars))
+            file.close()
+        if "2" in keyword:
+            print('Collecting Repos Information ...')
+            print_line(70, "*")
+            repos = repo_list(username)
+            file = open(username + "_repos.log", "w")
+            print(str(len(repos)) + " Repos --> " + username + "_repos.log")
+            print_line(70, "*")
+            file.write("\n".join(repos))
+            file.close()
+        if "3" in keyword:
+            print('Collecting Organizations Information ...')
+            print_line(70, "*")
+            orgs = org_list_gen(username)
+            file = open(username + "_orgs.log", "w")
+            print(str(len(orgs)) + " Organizations --> " + username + "_orgs.log")
+            print_line(70, "*")
+            file.write("\n".join(orgs))
+            file.close()
         return (list_1,list_2)
     except Exception as ex:
         error_log(str(ex))
@@ -462,12 +465,16 @@ def follow(username,password,id_list):
         else:
             print(user+" Followed")
         time.sleep(3)
-
+def get_input():
+    username = input("Please Enter Your Github Username : ")
+    keys=input("1- Collecting Stars Information\n2- Collecting Repos Information\n3- Collecting Organizations Information (Enter Number Seperated By , )")
+    keys=keys.split(",")
+    return [username,keys]
 def run():
     password = ""
     time_1 = time.perf_counter()
-    username = input("Please Enter Your Github Username : ")
-    (list_1, list_2) = list_maker(username)
+    [username,keys]=get_input()
+    (list_1, list_2) = list_maker(username,keys)
     dif_lists = dif(list_1, list_2, username)
     time_2 = time.perf_counter()
     dif_time = str(time_2 - time_1)
@@ -483,8 +490,12 @@ def run():
         if len(password) < 1:
             password = input("Please Enter Password : ")
         print("Processing ... ")
-        follow(username, password, dif_lists[0])
+        follow(username, password, dif_lists[1])
+    exit_string=input("Exit [E] / Restart[R] ?")
     gc.collect()
+    if exit_string.upper()=="E":
+        sys.exit()
+
 
 
 

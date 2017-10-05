@@ -12,7 +12,8 @@ if __name__=="__main__":
                 print("Test (Run doctest)")
                 print("Without arg --> Normal Run")
         else:
-            run()
+            while(True):
+                run()
     except Exception as ex:
         error_log(str(ex))
 
