@@ -480,7 +480,7 @@ def get_input(func_1=input,func_2=input):
     keys=func_2("1- Collecting Stars Information\n2- Collecting Repos Information\n3- Collecting Organizations Information (Enter Number Seperated By , )")
     keys=keys.split(",")
     return [username,keys]
-def run(func_1=input,func_2=input,func_3=input,func_4=input):
+def run(func_1=input,func_2=input,func_3=input):
     password = ""
     auth=False
     time_1 = time.perf_counter()
@@ -508,10 +508,7 @@ def run(func_1=input,func_2=input,func_3=input,func_4=input):
                 password = func_2("Please Enter Password : ")
                 print("Processing ... ")
                 auth=follow(username, password, dif_lists[1])
-    exit_string=func_4("Exit [E] / Restart[R] ?")
     gc.collect()
-    if exit_string.upper()=="E":
-        sys.exit()
 
 def test_function_1(a):
     return 'sarminh'
@@ -519,9 +516,6 @@ def test_function_2(a):
     return "1,2,3"
 def test_function_3(a):
     return "y"
-
-def test_function_4(a):
-    return "e"
 
 
 

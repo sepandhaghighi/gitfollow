@@ -49,7 +49,7 @@ Collecting Organizations Information ...
 **********************************************************************
 0 Organizations --> sarminh_orgs.log
 **********************************************************************
-(['sepandhaghighi', 'kasraaskari'], ['kasraaskari', 'sepandhaghighi'])
+(['kasraaskari', 'sepandhaghighi'], ['kasraaskari', 'sepandhaghighi'])
 >>> internet(host="8.8.8.8", port=53, timeout=3)
 True
 >>> seed(2)
@@ -77,19 +77,73 @@ Wait 5 sec for first search . . .
 31
 >>> unfollow("sarminh","password_test",["id_1","id_2"])
 [Error] Authentication Error
+False
 >>> follow("sarminh","password_test",["id_1","id_2"])
-Traceback (most recent call last):
-        ...
-SystemExit
+[Error] Authentication Error
+False
 >>> orgs=org_list_gen("sarminh")
 >>> repo_extract(2222,'ssss')
 >>> star_extract(2222)
 >>> user_list_gen(22222,'salam')
 >>> data=get_html('https://github.com/asdasdqweqweqweqweqwe?page=0&tab=followers')
-Invalid Github User
+Traceback (most recent call last):
+        ...
+SystemExit
 >>> dif(1212,121221,"sasa")
 [Error] dif function faild
->>> run(func_1=test_function_1,func_2=test_function_2,func_3=test_function_3,func_4=test_function_4)
+>>> run(func_1=test_function_1,func_2=test_function_2,func_3=test_function_3)
+<BLANKLINE>
+ .----------------.  .----------------.  .----------------.
+| .--------------. || .--------------. || .--------------. |
+| |    ______    | || |     _____    | || |  _________   | |
+| |  .' ___  |   | || |    |_   _|   | || | |  _   _  |  | |
+| | / .'   \_|   | || |      | |     | || | |_/ | | \_|  | |
+| | | |    ____  | || |      | |     | || |     | |      | |
+| | \ `.___]  _| | || |     _| |_    | || |    _| |_     | |
+| |  `._____.'   | || |    |_____|   | || |   |_____|    | |
+| |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'
+<BLANKLINE>
+<BLANKLINE>
+ .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
+| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
+| |  _________   | || |     ____     | || |   _____      | || |   _____      | || |     ____     | || | _____  _____ | |
+| | |_   ___  |  | || |   .'    `.   | || |  |_   _|     | || |  |_   _|     | || |   .'    `.   | || ||_   _||_   _|| |
+| |   | |_  \_|  | || |  /  .--.  \  | || |    | |       | || |    | |       | || |  /  .--.  \  | || |  | | /\ | |  | |
+| |   |  _|      | || |  | |    | |  | || |    | |   _   | || |    | |   _   | || |  | |    | |  | || |  | |/  \| |  | |
+| |  _| |_       | || |  \  `--'  /  | || |   _| |__/ |  | || |   _| |__/ |  | || |  \  `--'  /  | || |  |   /\   |  | |
+| | |_____|      | || |   `.____.'   | || |  |________|  | || |  |________|  | || |   `.____.'   | || |  |__/  \__|  | |
+| |              | || |              | || |              | || |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'
+<BLANKLINE>
+Collecting Follower Information ...
+**********************************************************************
+2 Followers --> sarminh_follower.log
+**********************************************************************
+Collecting Following Information ...
+**********************************************************************
+2 Following --> sarminh_following.log
+**********************************************************************
+Collecting Stars Information ...
+**********************************************************************
+3 Stars --> sarminh_stars.log
+**********************************************************************
+Collecting Repos Information ...
+**********************************************************************
+0 Repos --> sarminh_repos.log
+**********************************************************************
+Collecting Organizations Information ...
+**********************************************************************
+0 Organizations --> sarminh_orgs.log
+**********************************************************************
+0 Following - Not Follower --> sarminh_NotFollower.log
+**********************************************************************
+0 Follower - Not Following --> sarminh_NotFollowing.log
+**********************************************************************
+Data Generated In 00 days, 00 hour, 00 minutes, 33 seconds sec
+Log Files Are Ready --> C:\Users\Sepkjaer\AppData\Local\Programs\Python\Python35-32
 >>> cov.stop()
 >>> cov.save()
 

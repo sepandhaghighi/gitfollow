@@ -14,6 +14,9 @@ if __name__=="__main__":
         else:
             while(True):
                 run()
+                exit_string = input("Exit [E] / Restart[R] ?")
+                if exit_string.upper()=="E":
+                    break
     except Exception as ex:
         error_log(str(ex))
 
