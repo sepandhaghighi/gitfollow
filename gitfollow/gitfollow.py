@@ -511,7 +511,7 @@ def run(func_1=input,func_2=input,func_3=input):
     gc.collect()
 
 def test_function_1(a):
-    return 'sarminh'
+    return 'aligholamee'
 def test_function_2(a):
     return "1,2,3"
 def test_function_3(a):
