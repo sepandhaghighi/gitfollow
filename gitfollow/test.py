@@ -143,7 +143,7 @@ Collecting Organizations Information ...
 0 Follower - Not Following --> sarminh_NotFollowing.log
 **********************************************************************
 Data Generated In 00 days, 00 hour, 00 minutes, 33 seconds sec
-Log Files Are Ready --> C:\Users\Sepkjaer\AppData\Local\Programs\Python\Python35-32
+Log Files Are Ready --> /home/travis/build/sepandhaghighi/gitfollow
 >>> cov.stop()
 >>> cov.save()
 
