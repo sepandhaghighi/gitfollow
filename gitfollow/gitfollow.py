@@ -12,7 +12,13 @@ from art import tprint
 DEBUG=False
 import gc
 
-
+def help_func():
+    tprint("help")
+    print("By Sepand Haghighi\n")
+    print("python -m gitfollow")
+    print("- run  (run gitfollow)\n")
+    print("- test (run tests)\n")
+    print("- help (help page)\n")
 def zero_insert(input_string):
     '''
     This function get a string as input if input is one digit add a zero
