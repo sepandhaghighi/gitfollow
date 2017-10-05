@@ -37,6 +37,13 @@
 - Select Options
 - Find your data in log files
 
+<div align="center">
+
+<a href="https://asciinema.org/a/141005" target="_blank"><img src="https://asciinema.org/a/141005.png" /></a>
+
+
+</div>
+
 
 ## Issues & Bug Reports			
 
