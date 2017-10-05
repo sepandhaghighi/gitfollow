@@ -21,13 +21,20 @@
 
 ## Installation
 ### Source Code
-- Download  [Latest Source ](https://github.com/sepandhaghighi/gitfollow/archive/master.zip)
+- Download [Version 0.1](https://github.com/sepandhaghighi/gitfollow/archive/v0.1.zip) or [Latest Source ](https://github.com/sepandhaghighi/gitfollow/archive/master.zip)
+- `pip install -r requirements.txt` or `pip3 install -r requirements.txt` (Need root access)
+- `python3 setup.py install` or `python setup.py install` (Need root access)
 
-- `python3 setup.py install` or `python setup.py install`
+### PyPI
+
+
+- Check [Python Packaging User Guide](https://packaging.python.org/installing/)     
+- `pip install gitfollow` or `pip3 install gitfollow` (Need root access)
 
 ## Usage ##
 - `python3 -m gitfollow` or `python -m gitfollow`
-- Enter your username & wait
+- Enter your github username
+- Select Options
 - Find your data in log files
 
 
