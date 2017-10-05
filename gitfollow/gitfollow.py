@@ -8,6 +8,7 @@ from functools import reduce
 import time
 from random import randint
 import sys
+from art import tprint
 DEBUG=False
 import gc
 
@@ -466,6 +467,7 @@ def follow(username,password,id_list):
             print(user+" Followed")
         time.sleep(3)
 def get_input():
+    tprint("git\nfollow")
     username = input("Please Enter Your Github Username : ")
     keys=input("1- Collecting Stars Information\n2- Collecting Repos Information\n3- Collecting Organizations Information (Enter Number Seperated By , )")
     keys=keys.split(",")
