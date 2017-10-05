@@ -24,22 +24,22 @@
 >>> url_maker_star("sepand",2)
 'https://github.com/sepand?page=2&tab=stars'
 >>> data=get_html("http://github.com/sepandhaghighi?page=2&tab=follower")
->>> repo_lists=repo_list("sarminh",page_number=0,counter=0)
+>>> repo_lists=repo_list("sepandhaghighi",page_number=0,counter=0)
 >>> star_lists=star_list("sarminh",page_number=0,counter=0)
 >>> following_lists=following_list_gen("sarminh",page_number=0,counter=0)
 >>> follower_lists=follower_list_gen("sarminh",page_number=0,counter=0)
->>> list_maker("sarminh")
+>>> list_maker("sarminh",['1','2','3'])
 Collecting Follower Information ...
 **********************************************************************
-0 Followers --> sarminh_follower.log
+2 Followers --> sarminh_follower.log
 **********************************************************************
 Collecting Following Information ...
 **********************************************************************
-1 Following --> sarminh_following.log
+2 Following --> sarminh_following.log
 **********************************************************************
 Collecting Stars Information ...
 **********************************************************************
-0 Stars --> sarminh_stars.log
+3 Stars --> sarminh_stars.log
 **********************************************************************
 Collecting Repos Information ...
 **********************************************************************
@@ -49,12 +49,19 @@ Collecting Organizations Information ...
 **********************************************************************
 0 Organizations --> sarminh_orgs.log
 **********************************************************************
-([], ['sepandhaghighi'])
+(['sepandhaghighi', 'kasraaskari'], ['kasraaskari', 'sepandhaghighi'])
 >>> internet(host="8.8.8.8", port=53, timeout=3)
 True
 >>> seed(2)
 >>> create_random_sleep(index=1,min_time=1,max_time=3)
 1
+>>> gitfollow.DEBUG=True
+>>> seed(2)
+>>> create_random_sleep(index=0)
+Wait 5 sec for first search . . .
+**********************************************************************
+5
+>>> gitfollow.DEBUG=False
 >>> print_line(number=30,char="-")
 ------------------------------
 >>> dif(["test1","test2","test3"],["test2","test3","test5","test6"],"test")
@@ -75,6 +82,14 @@ Traceback (most recent call last):
         ...
 SystemExit
 >>> orgs=org_list_gen("sarminh")
+>>> repo_extract(2222,'ssss')
+>>> star_extract(2222)
+>>> user_list_gen(22222,'salam')
+>>> data=get_html('https://github.com/asdasdqweqweqweqweqwe?page=0&tab=followers')
+Invalid Github User
+>>> dif(1212,121221,"sasa")
+[Error] dif function faild
+>>> run(func_1=test_function_1,func_2=test_function_2,func_3=test_function_3,func_4=test_function_4)
 >>> cov.stop()
 >>> cov.save()
 

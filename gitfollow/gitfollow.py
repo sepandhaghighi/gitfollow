@@ -411,7 +411,7 @@ def list_maker(username,keyword=["1"]):
             print_line(70, "*")
             file.write("\n".join(orgs))
             file.close()
-        return (list_1,list_2)
+        return (sorted(list_1),sorted(list_2))
     except Exception as ex:
         error_log(str(ex))
 
@@ -437,9 +437,9 @@ def dif(list_1,list_2,username):
         print_line(70, "*")
         file.write("\n".join(dif_list_2))
         file.close()
-        return [dif_list_1,dif_list_2]
+        return [sorted(dif_list_1),sorted(dif_list_2)]
     except Exception as ex:
-        print(str(ex))
+        print("[Error] dif function faild")
 def unfollow(username,password,id_list):
     for user in id_list:
         response=requests.delete("https://api.github.com/user/following/" + user, auth=(username, password))
@@ -474,17 +474,17 @@ def follow(username,password,id_list):
             print(user+" Followed")
         time.sleep(3)
     return True
-def get_input():
+def get_input(func_1=input,func_2=input):
     tprint("git\nfollow")
-    username = input("Please Enter Your Github Username : ")
-    keys=input("1- Collecting Stars Information\n2- Collecting Repos Information\n3- Collecting Organizations Information (Enter Number Seperated By , )")
+    username = func_1("Please Enter Your Github Username : ")
+    keys=func_2("1- Collecting Stars Information\n2- Collecting Repos Information\n3- Collecting Organizations Information (Enter Number Seperated By , )")
     keys=keys.split(",")
     return [username,keys]
-def run():
+def run(func_1=input,func_2=input,func_3=input,func_4=input):
     password = ""
     auth=False
     time_1 = time.perf_counter()
-    [username,keys]=get_input()
+    [username,keys]=get_input(func_1=func_1,func_2=func_2)
     (list_1, list_2) = list_maker(username,keys)
     dif_lists = dif(list_1, list_2, username)
     time_2 = time.perf_counter()
@@ -492,27 +492,36 @@ def run():
     print("Data Generated In " + time_convert(dif_time) + " sec")
     print("Log Files Are Ready --> " + os.getcwd())
     if len(dif_lists[0])>0:
-        input_data = input("Unfollow Non-follower?Yes[y],No[n] ")
+        input_data = func_3("Unfollow Non-follower?Yes[y],No[n] ")
         if input_data.upper() == "Y":
             while(auth==False):
-                password = input("Please Enter Password : ")
+                password = func_2("Please Enter Password : ")
                 print("Processing ... ")
                 auth=unfollow(username, password, dif_lists[0])
     if len(dif_lists[1])>0:
-        input_data = input("Follow Non-following?Yes[y],No[n] ")
+        input_data = func_3("Follow Non-following?Yes[y],No[n] ")
         if input_data.upper() == "Y":
             if auth==True:
                 print("Processing ... ")
                 auth= follow(username, password, dif_lists[1])
             while(auth==False):
-                password = input("Please Enter Password : ")
+                password = func_2("Please Enter Password : ")
                 print("Processing ... ")
                 auth=follow(username, password, dif_lists[1])
-    exit_string=input("Exit [E] / Restart[R] ?")
+    exit_string=func_4("Exit [E] / Restart[R] ?")
     gc.collect()
     if exit_string.upper()=="E":
         sys.exit()
 
+def test_function_1(a):
+    return 'sarminh'
+def test_function_2(a):
+    return "1,2,3"
+def test_function_3(a):
+    return "y"
+
+def test_function_4(a):
+    return "e"
 
 
 
